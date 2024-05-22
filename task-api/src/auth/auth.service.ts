@@ -1,33 +1,31 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { UsersService } from 'src/users/users.service';
-import { compareSync as bcryptCompareSync } from 'bcrypt';
-import { AuthResponseDTO } from './auth.DTO';
-import { ConfigService } from '@nestjs/config';
+import { JwtService } from "@nestjs/jwt";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { User } from "../users/entity/user.entity";
+import * as bcrypt from "bcryptjs";
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class AuthService {
-    private jwtExpirationTimeInSeconds:number;
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    private jwtService: JwtService
+  ) {}
 
-    constructor(
-        private readonly    usersService: UsersService,
-        private readonly    jwtService: JwtService,
-        private readonly    configService: ConfigService
-    ){
-        this. jwtExpirationTimeInSeconds = +this.configService.get<number>('JWT_EXPIRATION_TIME');
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (user && (await bcrypt.compare(password, user.password))) {
+      const { password, ...result } = user;
+      return result;
     }
+    return null;
+  }
 
-    signIn(email: string, password: string): AuthResponseDTO{
-        const foundUser = this.usersService.findByEmail(email);
-
-        if (!foundUser || !bcryptCompareSync(password, foundUser.password)){
-            throw new UnauthorizedException();
-        }
-
-        const payload = { sub: foundUser.id, email: foundUser.email}
-
-        const token = this.jwtService.sign(payload);
-
-        return { token, expiresIn: this.jwtExpirationTimeInSeconds }
-    }
+  async login(user: any) {
+    const payload = { username: user.email, sub: user.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
 }

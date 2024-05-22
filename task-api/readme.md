@@ -14,3 +14,6 @@ CREATE TASK
     }
 
 http://localhost:3000
+
+
+Como faz para o usuario só poder escolher os tipos certos de status das task??

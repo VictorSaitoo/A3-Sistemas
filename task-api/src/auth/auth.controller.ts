@@ -1,18 +1,28 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { AuthResponseDTO } from './auth.DTO';
-import { AuthService } from './auth.service';
+import { Controller, Post, Body, BadRequestException } from "@nestjs/common";
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from "@nestjs/swagger";
+import {
+  loginDto,
+  LoginDto,
+  loginSuccessResponse,
+  loginFailureDto,
+} from "../respostas_dto/login.response.dto";
+import { AuthService } from "./auth.service";
 
-@Controller('auth')
+@Controller("auth")
+@ApiTags("auth")
 export class AuthController {
+  constructor(private authService: AuthService) {}
 
-    constructor(private readonly authService: AuthService){}
-
-    @HttpCode(HttpStatus.OK)
-    @Post('login')
-    signIn(
-        @Body('email') email: string,
-        @Body('password') password: string
-    ): AuthResponseDTO{
-        return this.authService.signIn(email, password);
+  @Post("login")
+  @ApiOperation({ summary: "Login de usuário" })
+  @ApiBody({ type: LoginDto })
+  @ApiResponse(loginSuccessResponse)
+  @ApiResponse(loginFailureDto)
+  async login(@Body() loginDto: {email: string, password: string}) {
+    const user = await this.authService.validateUser(loginDto.email, loginDto.password);
+    if (!user) {
+      throw new BadRequestException('Credenciais inválidas');
     }
+    return this.authService.login(user);
+  }
 }

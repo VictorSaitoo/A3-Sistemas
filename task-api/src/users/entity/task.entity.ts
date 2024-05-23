@@ -1,5 +1,6 @@
+import { type } from 'os';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { User } from '../../users/entity/user.entity'
+import { User } from './user.entity'
 
 @Entity('tasks')
 export class Tasks {
@@ -15,8 +16,8 @@ export class Tasks {
     @Column({ length: 20 })
     status: string;
 
-    @Column({ length: 10 })
-    expirationDate: Date;
+    @Column({type: 'date'})
+    expirationDate: string;
 
     @ManyToOne(() => User, user => user.task) // esta linha foi adicionada
     user: User;    

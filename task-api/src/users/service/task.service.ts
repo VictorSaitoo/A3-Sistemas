@@ -1,10 +1,9 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { FindAllParameters, TaskDTO, TaskStatusEnum, UpdateTaskDTO } from './task.DTO';
-import { v4 as uuid } from 'uuid';
+import {  TaskDTO, UpdateTaskDTO } from '../DTO/task.DTO';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Tasks } from './entity/task.entity';
+import { Tasks } from '../entity/task.entity';
 import { Repository } from 'typeorm';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from 'src/users/service/users.service';
 import { User } from 'src/users/entity/user.entity';
 
 @Injectable()

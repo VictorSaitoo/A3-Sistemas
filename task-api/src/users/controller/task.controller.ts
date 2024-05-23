@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
-import { FindAllParameters, TaskDTO, UpdateTaskDTO } from './task.DTO';
-import { TaskService } from './task.service';
+import { FindAllParameters, TaskDTO, UpdateTaskDTO } from '../DTO/task.DTO';
+import { TaskService } from '../service/task.service';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 

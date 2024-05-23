@@ -47,7 +47,7 @@ export class TaskDTO{
         example: "30/05/2024"
     })
     @IsDateString()
-    expirationDate: Date;
+    expirationDate: string;
 }
 
 

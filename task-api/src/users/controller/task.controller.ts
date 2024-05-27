@@ -11,7 +11,7 @@ export class TaskController {
     constructor(private readonly taskService: TaskService){ }
 
 
-    @ApiOperation({ summary: "Task criada" })
+    @ApiOperation({ summary: "Criar Task" })
     @ApiResponse({
         status: 201,
         description: "Task criaca com sucesso",

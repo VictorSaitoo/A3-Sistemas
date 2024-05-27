@@ -14,9 +14,9 @@ export class UsersService {
 
     async create(newUserDto: UserDTO): Promise<User> {
         try {
-          const saltOrRounds = 10; // o custo do processamento, 10 é geralmente suficiente
+          const saltOrRounds = 10;
           const hash = await bcrypt.hash(newUserDto.password, saltOrRounds);
-          newUserDto.password = hash; // substitui a senha original pelo hash
+          newUserDto.password = hash;
           return await this.userRepository.save(
             this.userRepository.create(newUserDto)
           );

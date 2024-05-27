@@ -1,7 +1,6 @@
 import { Controller, Post, Body, BadRequestException } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from "@nestjs/swagger";
 import {
-  loginDto,
   LoginDto,
   loginSuccessResponse,
   loginFailureDto,

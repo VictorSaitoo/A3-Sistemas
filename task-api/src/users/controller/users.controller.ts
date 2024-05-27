@@ -5,7 +5,6 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from '../entity/user.entity';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 
-@UseGuards(JwtAuthGuard)
 @Controller('users')
 @ApiTags("user")
 export class UsersController {
@@ -18,13 +17,14 @@ export class UsersController {
     description: "Usuário criado com sucesso.",
     type: UserDTO,
     })
-
     @ApiResponse({ status:400 , description: "Dados inválidos."})
     @Post()
-    create(@Body() user: UserDTO): Promise<any> {
+    async create(@Body() user: UserDTO): Promise<any> {
         return this.userService.create(user);
     }
 
+
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: "Listar todos os usuários"})
     @ApiResponse({
         status: 200,
@@ -36,6 +36,7 @@ export class UsersController {
         return this.userService.findAll();
     }
 
+    @UseGuards(JwtAuthGuard)
     @ApiOperation({ summary: "Obter um usuário pelo ID"})
     @ApiResponse({
         status: 200,

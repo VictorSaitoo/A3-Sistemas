@@ -6,18 +6,25 @@ const LoginPage = () => {
 
     const[email, setEmail] = useState(' ');
     const[nome, setNome] = useState(' ');
-    const[password, setPassword] = useState(' ');
+    const[password, setPassword] = useState('');
     const[mensagem, setMensagem] = useState(' ');
 
     const handleLogin = async(e) =>{
         e.preventDefault();
 
         try {
-            await axios.post('http://localhost:3000/auth/login', { 
-                tipo: 'validateUser',
-                dados: {nome,email,password}
+            const response = await axios.post('http://localhost:3001/auth/login', { 
+                email,password
             });
-            setMensagem('Login realizado com sucesso')
+            const meutoken = response.data.access_token; 
+            console.log("batata frita", response, " meu token ", meutoken)
+            if(meutoken ){ 
+                setMensagem('Login realizado com sucesso')
+                console.log("batata frita", meutoken)
+                localStorage.setItem("token", meutoken); 
+            } else {
+                setMensagem('Dados inválidos')
+            }
         }catch(error){
             if(error.responde && error.response.status === 400){
                 setMensagem("Credenciais invalidas");
@@ -33,13 +40,6 @@ const LoginPage = () => {
             <form onSubmit={handleLogin}>
             <h2>Login</h2>
                 <div>
-                    <label>Nome: </label>
-                    <input 
-                    type = "nome" 
-                    value = {nome} 
-                    onChange = {(e) => setNome(e.target.value)}/>
-                </div>
-                <div>
                     <label>Email: </label>
                     <input 
                     type = "email" 
@@ -54,6 +54,9 @@ const LoginPage = () => {
                     onChange = {(e) => setPassword(e.target.value)}/>
                 </div>
             <button type = "submit">Login</button>
+            
+                <h8> Ainda não tem cadastro? <a href="localhost:3000/cadastro">Clique Aqui!</a> </h8>
+            
             </form>
         </div>
 

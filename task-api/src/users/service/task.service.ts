@@ -42,20 +42,7 @@ export class TaskService {
     async findAll(): Promise<User[]> {
         return await this.userService.findAll();
     }
-   /* findAll(params: FindAllParameters) : TaskDTO[]{
-        return this.task.filter(t => {
-            let match = true;
-
-        if (params.title != undefined && !t.title.includes(params.title)){
-              match = false;
-         }
-           if (params.status != undefined && !t.status.includes(params.status)){
-               match = false;
-            }
-           return match;
-      })
-    } */
-
+  
     async update(
         id: number,
         updateTask: UpdateTaskDTO

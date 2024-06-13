@@ -19,6 +19,6 @@ export class Tasks {
     @Column({type: 'date'})
     expirationDate: string;
 
-    @ManyToOne(() => User, user => user.task) // esta linha foi adicionada
+    @ManyToOne(() => User, (user) => user.task) // esta linha foi adicionada
     user: User;    
 }

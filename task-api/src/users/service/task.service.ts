@@ -39,8 +39,8 @@ export class TaskService {
         return foundTask
     }
 
-    async findAll(): Promise<User[]> {
-        return await this.userService.findAll();
+    async findAll(): Promise<Tasks[]> {
+        return await this.taskRepository.find();
     }
   
     async update(

@@ -3,6 +3,8 @@ import { FindAllParameters, TaskDTO, UpdateTaskDTO } from '../DTO/task.DTO';
 import { TaskService } from '../service/task.service';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Tasks } from '../entity/task.entity';
+import { User } from '../entity/user.entity';
 
 @UseGuards(JwtAuthGuard)
 @Controller('task')
@@ -54,8 +56,8 @@ export class TaskController {
         type: TaskDTO,
     })
     @Get()
-    async findAll(){
-        return await this.taskService.findAll();
+    async findAll(): Promise<Tasks[]>{
+        return this.taskService.findAll();
     }
 
 

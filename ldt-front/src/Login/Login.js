@@ -5,7 +5,6 @@ import { useState } from "react";
 const LoginPage = () => {
 
     const[email, setEmail] = useState(' ');
-    const[nome, setNome] = useState(' ');
     const[password, setPassword] = useState('');
     const[mensagem, setMensagem] = useState(' ');
 
@@ -38,7 +37,7 @@ const LoginPage = () => {
     return(
         <div className="container">
             <form onSubmit={handleLogin}>
-            <h2>Login</h2>
+            <h2 className="login">Login</h2>
                 <div>
                     <label>Email: </label>
                     <input 
@@ -55,12 +54,16 @@ const LoginPage = () => {
                 </div>
             <button type = "submit">Login</button>
             
-                <h8> Ainda não tem cadastro? <a href="localhost:3000/cadastro">Clique Aqui!</a> </h8>
+                <div className="proxPg">
+                <h8> Ainda não tem cadastro? <a className="cliqueAqui" href="/cadastro">Clique Aqui!</a> </h8>
+                </div>
             
             </form>
+         
         </div>
 
     );
+    mensagem && alert(mensagem)
 };
 
 export default LoginPage;

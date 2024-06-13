@@ -3,15 +3,15 @@ import axios from "axios";
 
 
 const Cadastro = () => {
-
+    
     const [email, setEmail] = useState(' ');
     const [nome, setNome] = useState(' ');
-    const [password, setPassword] = useState(' ');
+    const [password, setPassword] = useState('');
     const [mensagem, setMensagem] = useState(' ');
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+    
         try {
             // funcionara para quando for necessário autorização
             // const token = localStorage.getItem("token");
@@ -38,6 +38,10 @@ const Cadastro = () => {
             console.log(error)
         }
     };
+    const login = () =>{
+
+        window.location.href = 'http://localhost:3000/';
+    }
 
     return (
         <div className="container">
@@ -64,11 +68,13 @@ const Cadastro = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                <button type="submit">Cadastro</button>
+                
+                <button type="submit" onClick={login}>Cadastro</button>
             </form>
+            {mensagem && alert(mensagem)}
         </div>
-
     );
+    
 };
 
 export default Cadastro;

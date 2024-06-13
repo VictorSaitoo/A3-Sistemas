@@ -39,3 +39,15 @@
   input[type=submit]:hover{
   background-color: #0056b3;
   }
+  .proxPg{
+    margin-top: 8px;
+    font-size: 12px;
+    text-align: center;
+  }
+  .cliqueAqui{
+    color: #0056b3;
+    font-weight: bold;
+  }
+  .login{
+    text-align: center;
+  }

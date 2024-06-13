@@ -12,8 +12,13 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     DatabaseModule,
     UserModule,
-    TypeOrmModule.forFeature([User, Tasks]),
     AuthModule,
+    TypeOrmModule.forRoot({
+      type: 'sqlite', // ou outro tipo de banco de dados
+      database: 'database.sqlite',
+      entities: [Tasks, User],
+      synchronize: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

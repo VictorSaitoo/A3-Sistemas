@@ -1,25 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './ldt.css';
+import axios from "axios";
+import instance from "../config/axiosConfig";
 
-function Ldt(){
+
+
+const Ldt = () => {
+
+  const [task, setTask] = useState([]);
+
+    useEffect(() => {
+      const fetchTask = async () => {
+        try {
+          const response = await instance.get('/task');
+          setTask(response.data);
+        }catch (error){
+          console.error('Não foi possivel encontrar as tasks', error)
+        }
+      }
+      fetchTask();
+    }, []);
+  
+  const newTask = () =>{
+    window.location.href = 'http://localhost:3000/nova-tarefa'
+  }
+    
   return(
     <div class="todo-container">
       <header>
         <h1>Todo Avançado</h1>
+        <button className="newTask" onClick={newTask}>
+          Nova Tarefa
+        </button>
       </header>
-      <form id="todo-form">
-        <p>Adicione sua tarefa</p>
-        <div class="form-control">
-          <input
-            type="text"
-            id="todo-input"
-            placeholder="O que você vai fazer?"
-          />
-          <button type="submit">
-            OK
-          </button>
-        </div>
-      </form>
       <form id="edit-form" class="hide">
         <p>Edite sua tarefa</p>
         <div class="form-control">
@@ -30,26 +43,16 @@ function Ldt(){
         </div>
         <button id="cancel-edit-btn">Cancelar</button>
       </form>
-      <div id="toolbar">
-        <div id="search">
-          <h4>Pesquisar:</h4>
-          <form>
-            <input type="text" id="search-input" placeholder="Buscar..." />
-            <button id="erase-button">
-              Ok
-            </button>
-          </form>
-        </div>
-        <div id="filter">
-          <h4>Filtrar:</h4>
-          <select id="filter-select">
-            <option value="all">Todos</option>
-            <option value="done">Feitos</option>
-            <option value="todo">A fazer</option>
-          </select>
-        </div>
-      </div>
+      
       <div id="todo-list">
+      <ul>
+       {task.map(task =>(
+        <li key={task.id}>
+        <strong>{task.title}</strong>{task.description}
+        <br />
+      </li>
+       ))}
+      </ul>
       </div>
     </div>
   );

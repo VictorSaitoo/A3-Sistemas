@@ -73,8 +73,8 @@ export class TaskController {
         type: TaskDTO,
     })
     @Put(":id")
-    async update(@Param("id") id: number, @Body() updateTask: UpdateTaskDTO){
-        return await this.taskService.update(id, updateTask);
+    async update(@Param("id", ParseIntPipe) id: number, @Body() updateTask: UpdateTaskDTO){
+         await this.taskService.update(id, updateTask);
     }
 
 
@@ -92,7 +92,7 @@ export class TaskController {
     })
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    async remove(@Param('id', ParseIntPipe) id: number){
-        return await this.taskService.remove(id);
+    async deleteTask(@Param('id', ParseIntPipe) id: number): Promise<void>{
+         await this.taskService.deleteTask(id);
     }
 }

@@ -5,12 +5,14 @@ import { Tasks } from '../entity/task.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/service/users.service';
 import { User } from 'src/users/entity/user.entity';
+import { TaskRepository } from '../repository/task.repository';
 
 @Injectable()
 export class TaskService {
 
     constructor(
         @InjectRepository(Tasks)
+        private taskRepositoryDelete: TaskRepository,
         private taskRepository: Repository<Tasks>,
         private userService: UsersService
     ){}
@@ -46,16 +48,17 @@ export class TaskService {
     async update(
         id: number,
         updateTask: UpdateTaskDTO
-    ): Promise<Tasks> {
-        const task = await this.findById(id);
-        delete updateTask.id;
+    ): Promise<void> {
 
-        const update = this.taskRepository.merge(task, updateTask);
-        return await this.taskRepository.save(update);
+        await this.taskRepository.update(id, updateTask)
+        //const task = await this.findById(id);
+        //delete updateTask.id;
+        //const update = this.taskRepository.merge(task, updateTask);
+        //await this.taskRepository.save(update);
+        
     }
 
-    async remove(id: number): Promise<void>{
-        const task = await this.findById(id);
-        await this.taskRepository.remove(task);
+    async deleteTask(id: number): Promise<void>{
+        await this.taskRepositoryDelete.deleteTask(id);
     }
 }

@@ -22,15 +22,32 @@ try{
 
     danilo.miguel@saojudas.br
 
-    <TaskItem key={task.id} task={task} onDelete={handleDelete} />
+   
 
-    <li className="lista"key={task.id}>
-        <strong >{task.title}</strong>
-        <i className="statusLista">{task.status}</i>
-        <br/> 
-        {task.description}
-        <p>
-        <button className="editBtn" onClick={edit}>Editar</button>
-        <button className="deleteBtn" onClick={handleDelete}>Deletar</button>
-        </p>
-      </li>
+   <div>
+            <h2>Edit Task</h2>
+            <input
+                type="text"
+                value={taskData.title}
+                onChange={(e) => setTaskData({ ...taskData, title: e.target.value })}
+                placeholder="Title"
+            />
+            <input
+                type="text"
+                value={taskData.description}
+                onChange={(e) => setTaskData({ ...taskData, description: e.target.value })}
+                placeholder="Description"
+            />
+            <input
+                type="checkbox"
+                checked={taskData.status}
+                onChange={(e) => setTaskData({ ...taskData, status: e.target.checked })}
+            /> Completed
+            <input
+                type="date"
+                value={taskData.expirationDate}
+                onChange={(e) => setTaskData({ ...taskData, expirationDate: e.target.value })}
+            />
+            <button onClick={handleUpdate}>Update Task</button>
+            <button onClick={() => history.push('/')}>Cancel</button>
+        </div>

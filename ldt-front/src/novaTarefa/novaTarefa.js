@@ -66,7 +66,7 @@ const NovaTarefa = () => {
     <div className="expirationDate">
         <input
         className="caixa"
-        type="text"
+        type="date"
         value={expirationDate}
         placeholder="2024-06-13"
         onChange={(e) => setExpirationDate(e.target.value)}

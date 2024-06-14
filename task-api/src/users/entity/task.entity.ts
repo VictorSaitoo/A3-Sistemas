@@ -1,5 +1,5 @@
 import { type } from 'os';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, EntityRepository, Repository } from 'typeorm';
 import { User } from './user.entity'
 
 @Entity('tasks')

@@ -153,8 +153,9 @@
     font-style: italic;
   }
   .statusLista{
+    float: right;
     color: red;
-    margin-left: 200px;
+  
   }
   .lista{
     margin-top: 10px;
@@ -170,9 +171,20 @@
     display: inline;
     color: black;
   }
-  .botao{
+  .CancelBtn{
+    margin-top: 10px;
     background-color: red;
     width: 100%;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .updateBtn{
+    width: 100%;
+    background-color: #007bff;
     color: #fff;
     border: none;
     padding: 10px;
@@ -185,4 +197,19 @@
   }
   .editeSuaTarefa{
     text-align: center;
+  }
+  .textUpdate{
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 10px;
+  }
+  .dateUpdate{
+    padding: 0.25rem 0.5rem;
+    margin-bottom: 10px;
+  }
+  .updateForm{
+    margin-left: 20px;
+    text-align: center;
+  }
+  .listaTarefas{
+    border-bottom: 1px solid #ddd;
   }

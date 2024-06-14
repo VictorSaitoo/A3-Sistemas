@@ -1,38 +1,31 @@
-import React, { useState } from "react"
-import axios from "axios";
-import './novaTarefa.css';
+import React, { useState } from "react";
 import instance from "../config/axiosConfig";
 
-const NovaTarefa = () => {
-
-    const[title, setTitle] = useState('');
+const UpdateTask = () =>{
+    const[title, setTitle] = useState ('');
     const[description, setDescription] = useState('');
     const[status, setStatus] = useState('');
     const[expirationDate, setExpirationDate] = useState('');
-    const [mensagem, setMensagem] = useState(' ');
-  
-    const createTask = async (e) => {
+
+    const update = async (e) => {
         e.preventDefault();
 
-        await instance.post('/task',{
+        await instance.put(`/task/`,{
             title, description, status, expirationDate
     });
-        
-    }
+}
 
-    const ldt = () =>{
-        window.location.href = 'http://localhost:3000/listadetarefas'
-    }
+const voltar = () =>{
+    window.location.replace('http://localhost:3000/listadetarefas')
+}
 
+return(
+    <div class="todo-container">
 
-    return( 
-<div class="todo-container">
-
-<form id="todo-form" className="form" onSubmit={createTask}>
-    <p className="createTask">Crie sua tarefa</p>
-    <div className="novaTarefa">
-
-    <h3>Titulo: </h3>
+    <form id="todo-form" className="form" onSubmit={update} >
+        <h2 className="editeSuaTarefa"><p>Edite sua tarefa</p></h2>
+    <div className="update">
+        <h3>Titulo: </h3>
     <div class="title">
         <input
         className="caixa"
@@ -72,12 +65,14 @@ const NovaTarefa = () => {
         onChange={(e) => setExpirationDate(e.target.value)}
         />
     </div>
+    </div>
+          <button type="submit">
+            Ok
+          </button>
+    
+        <button className="botao" onClick={voltar}>Cancelar</button>
+      </form>
         </div>
-        <button type="submit" className="botao" onClick={ldt}>
-        OK
-        </button>
-</form>
-        </div>
-);
+    )
 }
-export default NovaTarefa;
+export default UpdateTask

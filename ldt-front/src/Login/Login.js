@@ -34,6 +34,10 @@ const LoginPage = () => {
         }
     };
 
+    const ldt = () => {
+        window.location.replace('http://localhost:3000/listadetarefas')
+    }
+
     return(
         <div className="container">
             <form onSubmit={handleLogin}>
@@ -52,7 +56,7 @@ const LoginPage = () => {
                     value = {password} 
                     onChange = {(e) => setPassword(e.target.value)}/>
                 </div>
-            <button type = "submit">Login</button>
+            <button type = "submit" >Login</button>
             
                 <div className="proxPg">
                 <h8> Ainda não tem cadastro? <a className="cliqueAqui" href="/cadastro">Clique Aqui!</a> </h8>

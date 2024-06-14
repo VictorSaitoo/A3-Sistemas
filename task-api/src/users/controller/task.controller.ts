@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { FindAllParameters, TaskDTO, UpdateTaskDTO } from '../DTO/task.DTO';
 import { TaskService } from '../service/task.service';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
@@ -92,7 +92,7 @@ export class TaskController {
     })
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
-    async remove(@Param('id') id: number){
+    async remove(@Param('id', ParseIntPipe) id: number){
         return await this.taskService.remove(id);
     }
 }

@@ -25,7 +25,7 @@
   }
   
   button:hover {
-    background-color: #102f5e;
+    background-color: #9ab0ce;
   }
   
   button:hover > i {
@@ -42,10 +42,7 @@
   select {
     padding: 0.25rem 0.5rem;
   }
-  
-  .hide {
-    display: none;
-  }
+
   
   /* Todo Header */
   .todo-container {
@@ -84,6 +81,7 @@
   }
   
   #cancel-edit-btn {
+    margin-left: 80px;
     margin-top: 1rem;
     color: #444;
   }
@@ -100,11 +98,14 @@
   }
   
   #search {
-    border-right: 1px solid #ddd;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
     padding-right: 1rem;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
     margin-right: 1rem;
-    width: 65%;
-    display:flex;
+    width: 100%;
+    display: 10px;
     flex-direction: column;
   }
   
@@ -118,14 +119,8 @@
     margin-right: 0.3rem;
   }
   
-  #filter {
-    width: 35%;
-    height: 35%;
-    display: flex;
-    flex-direction: column;
-  }
-  
   #filter select {
+    padding-top: 5rem;
     flex: 1;
   }
   
@@ -156,4 +151,38 @@
     color: #fff;
     text-decoration: line-through;
     font-style: italic;
+  }
+  .statusLista{
+    color: red;
+    margin-left: 200px;
+  }
+  .lista{
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  .editBtn{
+    display: inline;
+    margin-right: 10px;
+    margin-top: 7px;
+    color: black;
+  }
+  .deleteBtn{
+    display: inline;
+    color: black;
+  }
+  .botao{
+    background-color: red;
+    width: 100%;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .update{
+    text-align: center;
+  }
+  .editeSuaTarefa{
+    text-align: center;
   }

@@ -4,10 +4,10 @@ import axios from "axios";
 
 const Cadastro = () => {
     
-    const [email, setEmail] = useState(' ');
-    const [nome, setNome] = useState(' ');
+    const [email, setEmail] = useState('');
+    const [nome, setNome] = useState('');
     const [password, setPassword] = useState('');
-    const [mensagem, setMensagem] = useState(' ');
+    const [mensagem, setMensagem] = useState('');
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -71,10 +71,9 @@ const Cadastro = () => {
                 
                 <button type="submit" onClick={login}>Cadastro</button>
             </form>
-            {mensagem && alert(mensagem)}
         </div>
     );
-    
+    {mensagem && alert(mensagem)}
 };
 
 export default Cadastro;

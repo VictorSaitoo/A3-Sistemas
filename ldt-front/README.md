@@ -19,3 +19,18 @@ try{
         }
         console.log(error)
     }
+
+    danilo.miguel@saojudas.br
+
+    <TaskItem key={task.id} task={task} onDelete={handleDelete} />
+
+    <li className="lista"key={task.id}>
+        <strong >{task.title}</strong>
+        <i className="statusLista">{task.status}</i>
+        <br/> 
+        {task.description}
+        <p>
+        <button className="editBtn" onClick={edit}>Editar</button>
+        <button className="deleteBtn" onClick={handleDelete}>Deletar</button>
+        </p>
+      </li>

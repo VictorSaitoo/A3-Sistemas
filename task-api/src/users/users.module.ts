@@ -17,5 +17,6 @@ import { TaskController } from './controller/task.controller';
   ],
   controllers: [AppController, UsersController, TaskController],
   providers: [AppService, UsersService, TaskService],
+  exports: [TaskService],
 })
 export class UserModule {}

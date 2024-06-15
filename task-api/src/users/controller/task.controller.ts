@@ -73,11 +73,11 @@ export class TaskController {
         type: TaskDTO,
     })
     @Put(":id")
-    async update(@Param("id", ParseIntPipe) id: number, @Body() updateTask: UpdateTaskDTO){
-         await this.taskService.update(id, updateTask);
+    update(@Param("id", ParseIntPipe) id: number, @Body() task: Partial<Tasks>): Promise<Tasks>{
+         return this.taskService.update(+id, task);
     }
 
-
+//updateTask: UpdateTaskDTO
 
     @ApiOperation({ summary: "Deletar task pelo ID" })
     @ApiResponse({

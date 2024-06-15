@@ -21,4 +21,14 @@ export class Tasks {
 
     @ManyToOne(() => User, (user) => user.task) // esta linha foi adicionada
     user: User;    
+
+
+
+}
+
+@EntityRepository(Tasks)
+export class TaskRepository extends Repository<Tasks>{
+    async deleteTask(id:number): Promise<void>{
+        await this.delete(id);
+    }
 }

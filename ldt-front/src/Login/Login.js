@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
 
@@ -21,22 +22,20 @@ const LoginPage = () => {
                 setMensagem('Login realizado com sucesso')
                 console.log("batata frita", meutoken)
                 localStorage.setItem("token", meutoken); 
+
+                toast.success('Login efetuado com sucesso');
+                console.log('Login efetuado com sucesso');
+                setTimeout(() => {window.location.replace('http://localhost:3000/listadetarefas')},2000);
             } else {
                 setMensagem('Dados inválidos')
             }
-        }catch(error){
-            if(error.responde && error.response.status === 400){
-                setMensagem("Credenciais invalidas");
-            }else{
-                setMensagem("Erro ao tentar o login")
-            }
-            console.log(error)
+        }catch (error) {
+            console.error('Erro ao fazer login!', error);
+            toast.error('Não foi possivel efetuar o Login');
         }
     };
 
-    const ldt = () => {
-        window.location.replace('http://localhost:3000/listadetarefas')
-    }
+
 
     return(
         <div className="container">

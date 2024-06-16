@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import axios from "axios";
 import './novaTarefa.css';
 import instance from "../config/axiosConfig";
+import { toast } from "react-toastify";
 
 const NovaTarefa = () => {
 
@@ -14,15 +15,22 @@ const NovaTarefa = () => {
     const createTask = async (e) => {
         e.preventDefault();
 
+    try{
+
         await instance.post('/task',{
-            title, description, status, expirationDate
-    });
+            title, description, expirationDate, status:'TO_DO'
+        });
+        toast.success('Task criada com sucesso');
+        console.log('Task criada com sucesso')
+        setTimeout(() => {window.location.replace('http://localhost:3000/listadetarefas')}, 3000)
+    }catch (error){
+        console.log('Não foi possivel criar a task');
+        toast.error('Não foi possivel criar a task');
+    }
         
     }
 
-    const ldt = () =>{
-        window.location.href = 'http://localhost:3000/listadetarefas'
-    }
+
 
 
     return( 
@@ -52,7 +60,7 @@ const NovaTarefa = () => {
         onChange={(e) => setDescription(e.target.value)}
         />
     </div>
-    <h3>Status: </h3>
+    {/* <h3>Status: </h3>
     <div className="status">
         <input
         className="caixa"
@@ -61,7 +69,7 @@ const NovaTarefa = () => {
         placeholder="IN_PROGRESS | TO_DO"
         onChange={(e) => setStatus(e.target.value)}
         />
-    </div>
+    </div> */}
     <h3>Data de expiração: </h3>
     <div className="expirationDate">
         <input
@@ -73,7 +81,7 @@ const NovaTarefa = () => {
         />
     </div>
         </div>
-        <button type="submit" className="botao" onClick={ldt}>
+        <button type="submit" className="botao">
         OK
         </button>
 </form>

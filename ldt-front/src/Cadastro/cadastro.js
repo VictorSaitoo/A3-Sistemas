@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 
 const Cadastro = () => {
@@ -28,20 +29,15 @@ const Cadastro = () => {
             await axios.post('http://localhost:3001/users', {
                 nome, email, password
             });
-            setMensagem('Usuário criado com sucesso')
+            console.log('Usuário cadastrado com sucesso');
+            toast.success('Usuário cadastrado com sucesso');
+            setTimeout(() => {window.location.replace('http://localhost:3000/')}, 3000)
         } catch (error) {
-            if (error.responde && error.response.status === 400) {
-                setMensagem("Credenciais invalidas");
-            } else {
-                setMensagem("Erro ao criar usuário o login")
-            }
-            console.log(error)
+            console.log('Não foi possivel cadastrar novo usuário',error)
+            toast.error('Não foi possivel cadastrar novo usuário')
         }
     };
-    const login = () =>{
 
-        window.location.href = 'http://localhost:3000/';
-    }
 
     return (
         <div className="container">
@@ -69,7 +65,7 @@ const Cadastro = () => {
                         onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 
-                <button type="submit" onClick={login}>Cadastro</button>
+                <button type="submit">Cadastro</button>
             </form>
         </div>
     );

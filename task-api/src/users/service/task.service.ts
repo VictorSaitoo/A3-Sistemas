@@ -15,6 +15,15 @@ export class TaskService {
         private userService: UsersService
     ){}
 
+    // async create(newTask: TaskDTO): Promise<Tasks> {
+    //     const task = new Tasks();
+    //     task.title = newTask.title;
+    //     task.description = newTask.description;
+    //     task.expirationDate = newTask.expirationDate;
+    //     task.status = 'TO_DO';  // Defina o status padrão aqui
+
+    //     return this.taskRepository.save(task);
+    // }
     async create(newTask: TaskDTO): Promise<Tasks> {
         const user = await this.userService.findById(newTask.id);
         if (!user) {

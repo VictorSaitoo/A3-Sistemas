@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef  } from "react";
 import './ldt.css';
 import instance from "../config/axiosConfig";
 import { deleteTask, updateTask } from "../service/service";
+import { toast } from "react-toastify";
 
 
 
@@ -22,18 +23,16 @@ const Ldt = () => {
       expirationDate: ''
   });
 
-  const editSectionRef = useRef (null);
 
       const fetchTask = async () => {
         try {
           const response = await instance.get('/task');
           setTask(response.data);
 
-          if (editSectionRef.current) {
-            editSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-        }
+        
         }catch (error){
-          console.error('Não foi possivel encontrar as tasks', error)
+          console.error('Não foi possivel encontrar as tasks', error);
+          toast.error('Não foi possivel encontrar as tasks');
         }
       }
 
@@ -47,8 +46,15 @@ const Ldt = () => {
   }
 
  const handleDelete = async (id) => {
-  await deleteTask(id);
-  fetchTask();
+  try{
+
+    await deleteTask(id);
+    fetchTask();
+    toast.success('Task deletada com sucesso');
+  }catch (error){
+    console.error('Não foi possivel deletar a task', error)
+    toast.error('Não foi possivel deletar a task');
+  }
  }
 
  const handleEditClick = (task) => {
@@ -62,15 +68,23 @@ const Ldt = () => {
 };
 
 const handleUpdate = async () => {
-  if (editingTask) {
-      await updateTask(editingTask.id, taskData);
-      setEditingTask(null);
-      fetchTask(); // Refetch the tasks after update
+ try{
+
+   if (editingTask) {
+     await updateTask(editingTask.id, taskData);
+     toast.success('Task editada com sucesso');
+     console.log('Task editada com sucesso');
+     setTimeout(() => {
+       setEditingTask(null);
+       fetchTask();
+      }, 5000)
+      
+    }
+  }catch (error){
+    toast.error('Não foi possivel editar a task');
+    console.log('Não foi possivel editar a task');
   }
-  if (editSectionRef.current) {
-    editSectionRef.current.scrollIntoView({ behavior: 'smooth' });
-};
-}
+  }
 
 // Função para alterar a consulta de pesquisa
 const handleSearchChange = (event) => {
@@ -88,9 +102,13 @@ const toggleTaskStatus = async (id, currentStatus) => {
       const newStatus = currentStatus === 'TO_DO' ? 'DONE' : 'TO_DO';
       await instance.put(`/task/${id}`, { status: newStatus });
       fetchTask(); // Atualiza a lista após alterar o status
+      toast.success(`Status da task atualizado com sucesso`);
+      console.log('Status da task atualizado com sucesso');
   } catch (error) {
       console.error('Erro ao atualizar o status da tarefa!', error);
-  }
+      toast.error('Não foi possivel atualizar o status da task');
+      console.log('Não foi possivel atualizar o status da task', error  );
+    }
 };
 
 // Filtra as tarefas com base na consulta de pesquisa e no filtro de status
@@ -117,7 +135,36 @@ const filteredTasks = task.filter(task => {
           Nova Tarefa
         </button>
       </header>
+      {editingTask && (
+                      <div className="todo-container" >
+                        <form className="updateForm"> 
 
+                        <h2 className="editeSuaTarefa">Editar Tarefa</h2>
+                    <input
+                      className="textUpdate"
+                      type="text"
+                      value={taskData.title}
+                      onChange={(e) => setTaskData({ ...taskData, title: e.target.value })}
+                        placeholder="Title"
+                    />
+                    <input
+                        className="textUpdate"
+                        type="text"
+                        value={taskData.description}
+                        onChange={(e) => setTaskData({ ...taskData, description: e.target.value })}
+                        placeholder="Description"
+                    />
+                    <input
+                        className="dateUpdate"
+                        type="date"
+                        value={taskData.expirationDate}
+                        onChange={(e) => setTaskData({ ...taskData, expirationDate: e.target.value })}
+                    />
+                    <button className="updateBtn" onClick={handleUpdate}>Update Task</button>
+                    <button className="CancelBtn" onClick={() => setEditingTask(null)}>Cancel</button>
+            </form>
+                </div>
+            )}
       <div id="toolbar">
         <div id="search">
           <h4>Procurar:</h4>
@@ -149,46 +196,27 @@ const filteredTasks = task.filter(task => {
        <br/> 
        {task.description}
        <p>
-       <button onClick={() => toggleTaskStatus(task.id, task.status)}>
-                                {task.status ? 'Desmarcar' : 'Marcar'} como concluída
-                            </button>
        <button className="editBtn" onClick={() => handleEditClick(task)}>Editar</button>
        <button className="deleteBtn" onClick={() => handleDelete(task.id)}>Deletar</button>
+        <label className="statusLabel">
+            <input 
+            className="okBtn"
+            type="checkbox" 
+            checked={task.status === 'DONE'} 
+            onChange={() => toggleTaskStatus(task.id, task.status)} 
+            />
+            <br/>
+            {/* {task.status === 'TO_DO' ? 'A fazer' : 'Concluída'} */}
+            </label>
+       
+       {/* <button className="okBtn" onClick={() => toggleTaskStatus(task.id, task.status)}>
+       {task.status === 'TO_DO' ? 'Marcar como concluída' : 'Desmarcar como concluída'}
+                            </button> */}
        </p>
      </li>
        ))}
       </ul>
       </div>
-      {editingTask && (
-                      <div className="todo-container" >
-                        <form className="updateForm"> 
-
-                        <h2 className="editeSuaTarefa">Editar Tarefa</h2>
-                    <input
-                      className="textUpdate"
-                      type="text"
-                      value={taskData.title}
-                      onChange={(e) => setTaskData({ ...taskData, title: e.target.value })}
-                        placeholder="Title"
-                    />
-                    <input
-                        className="textUpdate"
-                        type="text"
-                        value={taskData.description}
-                        onChange={(e) => setTaskData({ ...taskData, description: e.target.value })}
-                        placeholder="Description"
-                    />
-                    <input
-                        className="dateUpdate"
-                        type="date"
-                        value={taskData.expirationDate}
-                        onChange={(e) => setTaskData({ ...taskData, expirationDate: e.target.value })}
-                    />
-                    <button className="updateBtn" onClick={handleUpdate}>Update Task</button>
-                    <button className="CancelBtn" onClick={() => setEditingTask(null)}>Cancel</button>
-            </form>
-                </div>
-            )}
       
     </div>
   );

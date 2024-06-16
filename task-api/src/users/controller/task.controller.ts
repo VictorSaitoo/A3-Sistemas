@@ -19,6 +19,11 @@ export class TaskController {
         description: "Task criaca com sucesso",
         type: TaskDTO,
     })
+
+    // @Post()
+    // create(@Body() newTask: TaskDTO): Promise<Tasks> {
+    //     return this.taskService.create(newTask);
+    // }
     @Post()
     async create(@Body() newTask: TaskDTO){
         return await this.taskService.create(newTask);
